@@ -19,49 +19,40 @@ import in.phonebookapplication.model.Contact;
 import in.phonebookapplication.service.ContactService;
 
 @RestController
-@RequestMapping("/contacts")
 public class ContactRestController {
 
 	@Autowired
 	private ContactService service;
 
 	// Create Contact
-	@PostMapping("/save")
-	public ResponseEntity<String> saveContact(@RequestBody Contact contact) {
-		String saveContact = service.saveContact(contact);
-		return new ResponseEntity<String>("Contact '" + saveContact + "' saved", HttpStatus.OK);
+	@PostMapping("/contact")
+	public String createContact(@RequestBody Contact contact) {
+		String status = service.saveContact(contact);
+		return status;
 	}
 
 	// Display All Contacts
-	@GetMapping("/all")
-	public ResponseEntity<List<Contact>> getAllContacts() {
-		List<Contact> list = service.getAllContacts();
-		return new ResponseEntity<List<Contact>>(list, HttpStatus.OK);
+	@GetMapping("/allcontacts")
+	public List<Contact> getAllContacts() {
+		return service.getAllContacts();
 	}
 
 	// get ContactById
-	@GetMapping("/contact/{id}")
-	public ResponseEntity<Contact> getContactById(@PathVariable Integer id) {
-		Contact contact = service.getContactById(id);
-		return new ResponseEntity<Contact>(contact, HttpStatus.OK);
+	@GetMapping("/contact/{contactid}")
+	public Contact getContactById(@PathVariable Integer contactid) {
+		return service.getContactById(contactid);
 	}
 
 	// Edit and Update Contact Details
-	@PutMapping("/modify/{id}")
-	public ResponseEntity<String> updateContact(@PathVariable Integer id, @RequestBody Contact contact) {
-		Contact contactById = service.getContactById(id);
-		contactById.setContactName(contact.getContactName());
-		contactById.setContactEmail(contact.getContactEmail());
-		contactById.setContactNumber(contact.getContactNumber());
-		service.saveContact(contactById);
-		return new ResponseEntity<String>("Contact '" + id + "' Updated", HttpStatus.OK);
+	@PutMapping("/contact")
+	public String updateContact(@RequestBody Contact contact) {
+		return service.updateContact(contact);
 	}
 
 	// Delete Contact
-	@DeleteMapping("/contact/{id}")
-	public ResponseEntity<String> deleteContactById(@PathVariable Integer id) {
-		service.deleteContactById(id);
-		return new ResponseEntity<String>("Contact '" + id + "' Deleted", HttpStatus.OK);
+	@DeleteMapping("/contact/{contactid}")
+	public String deleteContact(@PathVariable Integer contactid) {
+		return service.deleteContactById(contactid);
 	}
 
 }

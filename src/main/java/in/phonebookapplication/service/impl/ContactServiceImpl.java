@@ -52,9 +52,9 @@ public class ContactServiceImpl implements ContactService {
 
 		if (repo.existsById(contact.getContactId())) {
 			repo.save(contact);
-			return "Update Success";
+			return "Contact Updated Successfully";
 		} else {
-			return "No Record Found";
+			return "No Contact Found";
 		}
 	}
 
@@ -63,9 +63,9 @@ public class ContactServiceImpl implements ContactService {
 
 		if (repo.existsById(contactId)) {
 			repo.deleteById(contactId);
-			return "Record Deleted";
+			return "Contact Deleted";
 		} else {
-			return "No Record Found";
+			return "No Contact Found";
 		}
 	}
 
